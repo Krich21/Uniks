@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 ### 3️⃣ Run the Scanner
 ```bash
-python security_scanner.py
+python3 security_scanner.py
 ```
 
 ---
