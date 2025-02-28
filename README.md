@@ -53,13 +53,3 @@ pip install -r requirements.txt
 ```bash
 python security_scanner.py
 ```
-```
-
-### **Fix Explanation**
-1. **Properly Close Code Blocks**: Ensure each code block is enclosed within triple backticks (```) and correctly formatted.
-2. **Avoid Mixing Markdown Headers Inside Code Blocks**: The `### **2️⃣ Install Dependencies**` was previously formatted incorrectly, causing GitHub to misinterpret it.
-3. **Ensure Blank Lines for Proper Separation**: GitHub's parser sometimes fails when there are no new lines between sections.
-
-This should resolve the issue, making the README display separate code blocks correctly.
-
-Let me know if you need further refinements! 🚀
