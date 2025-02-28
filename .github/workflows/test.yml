@@ -25,4 +25,4 @@ jobs:
           sleep 15  # Wait for the app to start\
           
       - name: Run Security Scanner
-        run: python security_scanner.sh
+        run: python security_scanner.py
