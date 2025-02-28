@@ -73,6 +73,6 @@ python3 security_scanner.py
 - [📖 Juice Shop Documentation](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/)
 - [🐍 Python requests library](https://docs.python-requests.org/en/latest/)
 - [🔍 BeautifulSoup Documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
-
+- [BASH Docs](https://devdocs.io/bash/)
 
 
