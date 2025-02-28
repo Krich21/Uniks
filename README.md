@@ -43,3 +43,26 @@ pip install -r requirements.txt
 ```bash
 python security_scanner.py
 ```
+
+---
+
+## **🎯 Example Outpute**
+```bash
+===== Starting Advanced Security Scanner =====
+
+[*] Testing for SQL Injection...
+[+] SQL Injection vulnerability detected using: ' OR 1=1 --
+
+[*] Testing for CSRF Vulnerabilities...
+[+] Possible CSRF vulnerability detected! Password changed without a CSRF token.
+
+[*] Testing for XSS Vulnerabilities...
+[+] Found 3 forms for XSS testing.
+[+] XSS vulnerability detected on /feedback
+
+[*] Testing for HTML Injection Vulnerabilities...
+[+] HTML Injection vulnerability detected on /comments
+
+===== Security Scan Completed =====
+```
+
