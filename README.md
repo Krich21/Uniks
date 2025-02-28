@@ -22,6 +22,7 @@
 ```bash
 git clone https://github.com/OleksandrBaranenko/Uniks.git
 cd Uniks
+```bash
 
 2️⃣ Install Dependencies
 ```bash
