@@ -1,3 +1,4 @@
+
 name: Run Security Scanner Tests
 
 on: [push, pull_request]
@@ -21,7 +22,7 @@ jobs:
       - name: Start OWASP Juice Shop
         run: |
           docker run -d -p 3000:3000 bkimminich/juice-shop
-          sleep 15  # Wait for the app to start
-
+          sleep 15  # Wait for the app to start\
+          
       - name: Run Security Scanner
-        run: python security_scanner.py
+        run: python security_scanner.sh
