@@ -69,5 +69,10 @@ python3 security_scanner.py
 
 ## **📚 Additional Resources**
 
+- [🔗 OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- [📖 Juice Shop Documentation](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/)
+- [🐍 Python requests library](https://docs.python-requests.org/en/latest/)
+- [🔍 BeautifulSoup Documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+
 
 
