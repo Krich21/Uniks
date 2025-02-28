@@ -29,5 +29,9 @@ It helps **pentesters and developers** identify security weaknesses in web appli
 git clone https://github.com/Krich21/Uniks.git
 cd Uniks
 
+---
 
+## **2️⃣ Install Dependencies
+```bash
+pip install -r requirements.txt
 
