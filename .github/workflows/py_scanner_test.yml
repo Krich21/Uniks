@@ -1,5 +1,5 @@
 
-name: Run Security Scanner Tests for python scanner
+name: Run Security Scanner Tests for Python scanner
 
 on: [push, pull_request]
 
