@@ -31,7 +31,10 @@ cd Uniks
 
 ---
 
-## **2️⃣ Install Dependencies
+### **2️⃣ Install Dependencies
 ```bash
 pip install -r requirements.txt
+
+
+python security_scanner.py
 
