@@ -22,17 +22,7 @@ It helps **pentesters and developers** identify security weaknesses in web appli
 
 ---
 
-From your screenshot, it looks like the GitHub Markdown rendering issue is due to an incorrectly formatted section in your `README.md` file. The issue appears to be:
-
-1. **Mixed Markdown Headers and Code Blocks**:  
-   - The `### **2️⃣ Install Dependencies**` header is not correctly separating the next code block.
-   - The `pip install -r requirements.txt` command might be merged improperly.
-
-### **How to Fix It**
-To correctly separate the sections and ensure proper rendering in GitHub, try formatting your `README.md` file as follows:
-
-```md
-## Installation & Usage
+## **⚒️ Installation & Usage**
 
 ### 1️⃣ Clone the Repository
 ```bash
