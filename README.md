@@ -26,7 +26,7 @@ It helps **pentesters and developers** identify security weaknesses in web appli
 
 ### **1️⃣ Clone the Repository**
 ```bash
-git clone https://github.com/OleksandrBaranenko/Uniks.git
+git clone https://github.com/Krich21/Uniks.git
 cd Uniks
 
 
