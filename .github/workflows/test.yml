@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -16,6 +17,11 @@ jobs:
 
       - name: Install Dependencies
         run: pip install -r requirements.txt
+
+      - name: Start OWASP Juice Shop
+        run: |
+          docker run -d -p 3000:3000 bkimminich/juice-shop
+          sleep 15  # Wait for the app to start
 
       - name: Run Security Scanner
         run: python security_scanner.py
