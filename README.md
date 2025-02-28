@@ -23,11 +23,11 @@
 git clone https://github.com/OleksandrBaranenko/Uniks.git
 cd Uniks
 
-### **2️⃣ Install Dependencies
+2️⃣ Install Dependencies
 ```bash
 pip install -r requirements.txt
 
-### **3️⃣ Run the Scanner
+3️⃣ Run the Scanner
 ```bash
 python security_scanner.py
 
