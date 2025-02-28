@@ -11,13 +11,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
+      - name: Grant execute permission to security script
+        run: chmod +x security_scanner.sh
 
       - name: Start OWASP Juice Shop
         run: |
@@ -25,4 +20,4 @@ jobs:
           sleep 15  # Wait for the app to start
           
       - name: Run Security Scanner
-        run: python security_scanner.sh
+        run: bash security_scanner.sh
