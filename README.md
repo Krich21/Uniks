@@ -46,7 +46,7 @@ python security_scanner.py
 
 ---
 
-## **🎯 Example Outpute**
+## **🎯 Example Output**
 ```bash
 ===== Starting Advanced Security Scanner =====
 
@@ -65,4 +65,9 @@ python security_scanner.py
 
 ===== Security Scan Completed =====
 ```
+---
+
+## **📚 Additional Resources**
+
+
 
